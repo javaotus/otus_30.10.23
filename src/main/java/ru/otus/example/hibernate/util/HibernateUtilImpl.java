@@ -1,6 +1,5 @@
 package ru.otus.example.hibernate.util;
 
-
 import org.hibernate.SessionFactory;
 import ru.otus.example.hibernate.enums.SessionFactoryType;
 
@@ -18,4 +17,5 @@ public class HibernateUtilImpl implements HibernateUtil {
 			case XML_BASED -> getXmlBasedSessionFactory();
 		};
 	}
+
 }

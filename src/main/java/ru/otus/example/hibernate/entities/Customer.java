@@ -6,12 +6,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.MapKeyColumn;
+import jakarta.persistence.MapKeyJoinColumn;
 import jakarta.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
@@ -66,9 +68,13 @@ public class Customer {
     private Set<Bank> banks;
 
     @ElementCollection
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false)
     @MapKeyColumn(name = "currency")
-    @CollectionTable(name = "statement", joinColumns = { @JoinColumn(name = "customer") })
+    @MapKeyJoinColumn(name = "currency", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_statement_currency"))
+    @CollectionTable(
+        name = "statement",
+        joinColumns = { @JoinColumn(name = "customer", foreignKey = @ForeignKey(name = "FK_statement_customer")) }
+    )
     private Map<Integer, BigDecimal> statement = new HashMap<>();
 
 }

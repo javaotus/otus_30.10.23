@@ -10,13 +10,14 @@ repositories {
     mavenCentral()
 }
 
-def commonsLoggingVersion = "1.2"
-def hibernateVersion = "6.1.7.Final"
-def lombokVersion = "1.18.26"
-def postgreSqlVersion = "42.5.4"
+def commonsLoggingVersion = "1.3.2"
+def h2DataBaseVersion = "2.2.224"
+def hibernateVersion = "6.5.2.Final"
+def lombokVersion = "1.18.32"
+def postgreSqlVersion = "42.7.3"
 
-def jupiterPlatformVersion = "5.8.1"
-def jupiterPlatformSuiteVersion = "1.8.1"
+def jupiterPlatformVersion = "5.10.2"
+def jupiterPlatformSuiteVersion = "1.10.2"
 
 dependencies {
     implementation("commons-logging:commons-logging:${commonsLoggingVersion}")
@@ -25,7 +26,7 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
     runtimeOnly("org.postgresql:postgresql:${postgreSqlVersion}")
 
-    testImplementation("com.h2database:h2:2.1.214")
+    testImplementation("com.h2database:h2:${h2DataBaseVersion}")
     testImplementation("commons-logging:commons-logging:${commonsLoggingVersion}")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${jupiterPlatformVersion}")

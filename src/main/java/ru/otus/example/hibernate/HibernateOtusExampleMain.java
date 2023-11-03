@@ -22,13 +22,12 @@ public class HibernateOtusExampleMain {
 
 	public static void main(String[] args) {
 
-		SessionFactory sessionFactory = new HibernateUtilImpl()
-				.buildSessionFactory(SessionFactoryType.JAVA_BASED);
+		SessionFactory sessionFactory = new HibernateUtilImpl().buildSessionFactory(SessionFactoryType.JAVA_BASED);
 
-		//insertNewBank(sessionFactory);
-		//insertNewCity(sessionFactory);
-		//insertNewEmail(sessionFactory);
-		//selectBank(sessionFactory);
+		insertNewCity(sessionFactory);
+		insertNewBank(sessionFactory);
+//		insertNewEmail(sessionFactory);
+//		selectBank(sessionFactory);
 
 
 		sessionFactory.close();
@@ -37,11 +36,13 @@ public class HibernateOtusExampleMain {
 
 	private static void insertNewBank(SessionFactory sessionFactory) {
 
-		Bank bank = generateRandomBank();
-
 		//start transaction
 		Session session = sessionFactory.getCurrentSession();
 		session.beginTransaction();
+
+		City city = session.get(City.class, 1);
+
+		Bank bank = generateRandomBank(city);
 
 		Bank merged = session.merge(bank);
 		session.getTransaction().commit();
@@ -108,8 +109,11 @@ public class HibernateOtusExampleMain {
 
 	}
 
-	private static Bank generateRandomBank() {
-		return Bank.builder().name("SuperBank_" + new Random(100).nextInt()).build();
+	private static Bank generateRandomBank(City city) {
+		return Bank.builder()
+				.name("SuperBank_" + new Random(100).nextInt())
+				.city(city)
+			.build();
 	}
 
 }

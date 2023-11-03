@@ -6,9 +6,10 @@
 	<session-factory>
 		<!-- Database connection properties - Driver, URL, user, password -->
 		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/otus-demo</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/otus</property>
 		<property name="hibernate.connection.username">postgres</property>
 		<property name="hibernate.connection.password">postgres</property>
+		<property name="hibernate.default_schema">lesson_25</property>
 		<!-- Connection Pool Size -->
 		<property name="hibernate.connection.pool_size">5</property>
 		
@@ -19,7 +20,7 @@
 		<property name="hibernate.cache.provider_class">org.hibernate.cache.internal.NoCachingRegionFactory</property>
 		<!-- Outputs the SQL queries, should be disabled in Production -->
 		<property name="hibernate.show_sql">true</property>
-		<property name="hibernate.hbm2ddl.auto">validate</property>
+		<property name="hibernate.hbm2ddl.auto">create</property>
 		
 		<!-- Dialect is required to let Hibernate know the Database Type, MySQL, Oracle etc
 			Hibernate 4 automatically figure out Dialect from Database Connection Metadata -->

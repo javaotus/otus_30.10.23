@@ -29,11 +29,12 @@ public class JavaBasedSessionFactory {
             Properties props = new Properties();
 
             props.put("hibernate.connection.driver_class", "org.postgresql.Driver");
-            props.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/otus-demo");
+            props.put("hibernate.connection.url", "jdbc:postgresql://localhost:5432/otus");
             props.put("hibernate.connection.username", "postgres");
             props.put("hibernate.connection.password", "postgres");
+            props.put("hibernate.default_schema", "lesson_25");
             props.put("hibernate.current_session_context_class", "thread");
-            props.put("hibernate.hbm2ddl.auto", "update");
+            props.put("hibernate.hbm2ddl.auto", "create");
 
             configuration.setProperties(props);
 

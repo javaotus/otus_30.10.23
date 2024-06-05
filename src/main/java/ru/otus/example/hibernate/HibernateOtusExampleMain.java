@@ -5,14 +5,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import ru.otus.example.hibernate.dtos.BankDto;
 import ru.otus.example.hibernate.entities.Bank;
 import ru.otus.example.hibernate.entities.City;
+import ru.otus.example.hibernate.entities.Customer;
 import ru.otus.example.hibernate.entities.Email;
 import ru.otus.example.hibernate.enums.SessionFactoryType;
 import ru.otus.example.hibernate.util.HibernateUtilImpl;
 
 import java.lang.invoke.MethodHandles;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -24,8 +28,9 @@ public class HibernateOtusExampleMain {
 
 		SessionFactory sessionFactory = new HibernateUtilImpl().buildSessionFactory(SessionFactoryType.JAVA_BASED);
 
-		insertNewCity(sessionFactory);
-		insertNewBank(sessionFactory);
+//		insertNewCity(sessionFactory);
+//		insertNewBank(sessionFactory);
+		insertMassEntity(sessionFactory);
 //		insertNewEmail(sessionFactory);
 //		selectBank(sessionFactory);
 
@@ -114,6 +119,36 @@ public class HibernateOtusExampleMain {
 				.name("SuperBank_" + new Random(100).nextInt())
 				.city(city)
 			.build();
+	}
+
+	private static void insertMassEntity(SessionFactory sessionFactory) {
+		Session session = sessionFactory.getCurrentSession();
+		Transaction transaction = null;
+		List<Email> emails = new ArrayList<>();
+
+		emails.add(new Email("test1@mail.com"));
+		emails.add(new Email("test2@mail.com"));
+		emails.add(new Email("test3@mail.com"));
+		emails.add(new Email("test4@mail.com"));
+		emails.add(new Email("test5@mail.com"));
+		emails.add(new Email("test6@mail.com"));
+
+		try {
+			transaction = session.beginTransaction();
+			for (Email email : emails) {
+				session.merge(email);
+			}
+			session.flush();
+			session.clear();
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
 	}
 
 }
